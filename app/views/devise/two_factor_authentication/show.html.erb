@@ -1,6 +1,6 @@
 <div id="login">
   <%= content_tag :h2, "Please enter the 2FA code recieved by SMS" %>
-  <%= active_admin_form_for(:two_factor_authentication, :as => resource_name, :html => {:method => 'put'}) do |f|
+  <%= active_admin_form_for(:two_factor_authentication, :as => resource_name, :html => {:method => 'put', :autocomplete => 'off'}) do |f|
     f.inputs do
       f.input :code, input_html: { name: :code }
     end
