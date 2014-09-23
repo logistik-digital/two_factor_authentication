@@ -1,4 +1,6 @@
 class Devise::TwoFactorAuthenticationController < DeviseController
+  include ActiveAdmin::Devise::Controller
+
   prepend_before_filter :authenticate_scope!
   before_filter :prepare_and_validate, :handle_two_factor_authentication
 
