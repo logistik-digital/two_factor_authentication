@@ -1,4 +1,6 @@
-# Two factor authentication for Devise
+# Two factor authentication for Devise (ActiveAdmin)
+
+Forked for 2FA with ActiveAdmin. Uses ActiveAdmin devise and views.
 
 [![Build Status](https://travis-ci.org/Houdini/two_factor_authentication.svg?branch=master)](https://travis-ci.org/Houdini/two_factor_authentication)
 [![Code Climate](https://codeclimate.com/github/Houdini/two_factor_authentication.png)](https://codeclimate.com/github/Houdini/two_factor_authentication)
@@ -16,7 +18,7 @@
 
 In a Rails environment, require the gem in your Gemfile:
 
-    gem 'two_factor_authentication'
+    gem 'two_factor_authentication', git: 'https://github.com/logistik-digital/two_factor_authentication.git', branch: 'activeadmin-2fa'
 
 Once that's done, run:
 
@@ -26,9 +28,9 @@ Once that's done, run:
 
 In order to add two factor authorisation to a model, run the command:
 
-    bundle exec rails g two_factor_authentication MODEL
+    bundle exec rails g two_factor_authentication AdminUser
 
-Where MODEL is your model name (e.g. User or Admin). This generator will add `:two_factor_authenticatable` to your model
+This generator will add `:two_factor_authenticatable` to your model
 and create a migration in `db/migrate/`, which will add `:otp_secret_key` and `:second_factor_attempts_count` to your table.
 Finally, run the migration with:
 
@@ -98,24 +100,6 @@ This gem is compatible with Google Authenticator (https://support.google.com/acc
     user.provisioning_uri #This assumes a user model with an email attributes
 
 This provisioning uri can then be turned in to a QR code if desired so that users may add the app to Google Authenticator easily.  Once this is done they may retrieve a one-time password directly from the Google Authenticator app as well as through whatever method you define in `send_two_factor_authentication_code`
-
-#### Overriding the view
-
-The default view that shows the form can be overridden by first adding a folder named: "two_factor_authentication" inside "app/views/devise", in here you want to create a "show.html.erb" view.
-
-The full path should be "app/views/devise/two_factor_authentication/show.html.erb"
-
-```html
-<h2>Hi, you received a code by email, please enter it below, thanks!</h2>
-
-<%= form_tag([resource_name, :two_factor_authentication], :method => :put) do %>
-  <%= text_field_tag :code %>
-  <%= submit_tag "Log in!" %>
-<% end %>
-
-<%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
-
-```
 
 #### Updating existing users with OTP secret key
 
